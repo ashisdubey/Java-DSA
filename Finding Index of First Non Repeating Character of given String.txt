@@ -1,0 +1,73 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class NonRepeatingCharIndex {
+
+	public static void main(String[] args) {
+		// Program to find first non repeating character's inde
+
+		String s = "leetcode";
+
+		int index = nonRepeatingCharIndex(s);
+		System.out.println(index);
+	}
+
+	private static int nonRepeatingCharIndex(String s) {
+		/*
+		 * Applying Brute Force approach 
+		 * Time Complexity = O(N^2) 
+		 * Space Complexity = O(1)
+		 * 
+		 
+		 Approach-I
+		 ========
+		 
+		for (int i = 0; i < s.length(); i++) {
+			int count = 0;
+			for (int j = 0; j < s.length(); j++) {
+				if (s.charAt(i) == s.charAt(j)) {
+					count++;
+				}
+				if (count > 1) {
+					break;
+				}
+			}
+			if (count == 1) {
+				return i;
+			}
+		}
+		return -1;
+		
+		*/
+		
+		/*
+		 * Approach- II
+		 * Here we will use HashMap to store visited characters with their count
+		 * Time Complexity = O(N)
+		 * Space compleity = O(N)
+		 * 
+		 */
+		Map<Character, Integer> charCount = new HashMap<Character, Integer>();
+		
+		//First iteration through the given string to calculate count of each character
+		for(int i=0;i<s.length();i++) {
+			if(charCount.containsKey(s.charAt(i))){
+				int currCount = charCount.get(s.charAt(i))+1;
+				charCount.replace(s.charAt(i), currCount);
+			}else {
+				charCount.put(s.charAt(i), 1);
+			}
+		}
+		
+		//Now we iterate from first character of String and check the count value of that key
+		int index=-1;
+		for(int i=0;i<s.length();i++) {
+			if(charCount.get(s.charAt(i))==1) {
+				index=i;
+				break;
+			}
+		}
+		return index;
+	}
+
+}
